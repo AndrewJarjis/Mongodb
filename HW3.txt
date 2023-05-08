@@ -1,0 +1,110 @@
+#1
+db.people.aggregate([
+  {
+    $group: {
+      _id: null,
+      averageAge: { $avg: "$age" }
+    }
+  }
+])
+#2
+db.people.aggregate([
+  {
+    $group: {
+      _id: "$gender",
+      averageAge: { $avg: "$age" }
+    }
+  }
+])
+#3
+db.people.aggregate([
+  {
+    $group: {
+      _id: "$gender",
+      count: { $sum: 1 }
+    }
+  }
+])
+#4
+db.people.find({}, { _id: 0, name: 1, age: 1 }).sort({ age: -1 }).limit(3)
+#5
+db.people.aggregate([
+  {
+    $project: {
+      name: { $concat: ["$first_name", " ", "$last_name"] },
+      age: 1,
+      _id: 0
+    }
+  },
+  {
+    $sort: { age: 1 }
+  },
+  {
+    $limit: 5
+  }
+])
+#6
+db.people.aggregate([
+  {
+    $project: {
+      name: { $concat: ["$first_name", " ", "$last_name"] },
+      age: 1,
+      _id: 0
+    }
+  },
+  {
+    $sort: { age: 1 }
+  },
+  {
+    $limit: 5
+  }
+])
+#7
+#8
+#9db.orders.aggregate([
+  {
+    $group: {
+      _id: null,
+      totalSales: { $sum: "$total" }
+    }
+  }
+])
+#10
+
+
+
+
+
+
+#11
+db.orders.aggregate([
+  {
+    $group: {
+      _id: "$date",
+      numOrders: { $sum: 1 }
+    }
+  },
+  {
+    $sort: { numOrders: -1 }
+  },
+  {
+    $limit: 1
+  }
+])
+#12
+db.orders.aggregate([
+  {
+    $group: {
+      _id: "$date",
+      totalSales: { $sum: "$total" }
+    }
+  },
+  {
+    $sort: { totalSales: -1 }
+  },
+  {
+    $limit: 1
+  }
+])
+#13
+#14
